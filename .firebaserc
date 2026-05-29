@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "> default": "cooking-e9fc3",
+    "default": "cooking-e9fc3"
+  },
+  "targets": {},
+  "etags": {}
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "398359138001",
+    "project_id": "cooking-e9fc3",
+    "storage_bucket": "cooking-e9fc3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:398359138001:android:a5dc2179d815dc2ae53ff0",
+        "android_client_info": {
+          "package_name": "com.example.cooking_healthy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMjEaNxmtPekZkzNJ0DOXPkBj5rjNyfA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,22 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "recipes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "dietTags", "arrayConfig": "CONTAINS" }
+      ]
+    },
+
+    {
+      "collectionGroup": "dietPlans",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "targetDiet", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

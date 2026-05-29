@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function callerRole() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+    function isAdmin()        { return request.auth != null && callerRole() == 'admin'; }
+    function isNutritionist() { return request.auth != null && callerRole() == 'nutritionist'; }
+    function isOwner(uid)     { return request.auth != null && request.auth.uid == uid; }
+    function isAuth()         { return request.auth != null; }
+
+    // ── Users ────────────────────────────────────────────────────────────────
+    match /users/{uid} {
+      allow read:   if isOwner(uid) || isAdmin();
+      allow create: if isOwner(uid);
+      allow update: if isOwner(uid) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ── Recipes ──────────────────────────────────────────────────────────────
+    match /recipes/{recipeId} {
+      allow read: if isAuth() && (
+        resource.data.status == 'published' || isAdmin() || isNutritionist()
+      );
+      allow create, update, delete: if isAdmin() || isNutritionist();
+    }
+
+    // ── Favorites ────────────────────────────────────────────────────────────
+    match /favorites/{uid}/items/{recipeId} {
+      allow read, write: if isOwner(uid);
+    }
+
+    // ── Nutrition logs ───────────────────────────────────────────────────────
+    match /nutritionLogs/{uid}/entries/{date} {
+      allow read, write: if isOwner(uid);
+    }
+
+    // ── Diet plans ───────────────────────────────────────────────────────────
+    match /dietPlans/{planId} {
+      allow read:                   if isAuth();
+      allow create, update, delete: if isNutritionist() || isAdmin();
+    }
+
+    // ── Advice ───────────────────────────────────────────────────────────────
+    match /advice/{adviceId} {
+      allow read:                   if isAuth();
+      allow create, update, delete: if isNutritionist() || isAdmin();
+    }
+  }
+}
